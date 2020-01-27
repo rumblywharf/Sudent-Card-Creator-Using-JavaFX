@@ -5,17 +5,9 @@ public class Student {
     private int studentNumber;
     private String firstName, lastName;
 
-    public Student(int studentNumber, String firstName, String lastName) {
-        this.studentNumber = studentNumber;
+    public Student(String firstName, String lastName, int studentNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public int getStudentNumber() {
-        return studentNumber;
-    }
-
-    public void setStudentNumber(int studentNumber) {
         this.studentNumber = studentNumber;
     }
 
@@ -35,11 +27,16 @@ public class Student {
         this.lastName = lastName;
     }
 
+    public int getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(int studentNumber) {
+        this.studentNumber = studentNumber;
+    }
+
+    @Override
     public String toString() {
-        return "Student{" +
-                "studentNumber=" + studentNumber +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return String.format("%s %s student #: %d", firstName, lastName, studentNumber);
     }
 }
