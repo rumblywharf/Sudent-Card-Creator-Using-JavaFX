@@ -17,8 +17,8 @@ public class Main extends Application{
      *    launches the fxml file
      */
     public static void main(String[] args) {
-        Student testing = new Student("cameron", "Thompson", 200425992);
-        System.out.println(testing);
+        //Student testing = new Student("cameron", "Thompson", 200425992, "something");
+        //System.out.println(testing);
         launch(args);
     }
 
@@ -30,9 +30,9 @@ public class Main extends Application{
      */
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Student_Card.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("CreateStudent.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Student Card");
+        stage.setTitle("Create a Student Card");
         stage.setScene(scene);
         stage.show();
     }

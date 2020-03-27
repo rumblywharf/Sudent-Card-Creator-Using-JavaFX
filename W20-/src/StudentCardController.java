@@ -22,18 +22,18 @@ public class StudentCardController implements Initializable {
     public Label studentNumberLabel;
     public TextArea favouriteActivitiesTextArea;
     public ImageView image;
-    public ArrayList<String> activities = new ArrayList<String>();
+    private ArrayList<String> activities = new ArrayList<String>();
 
     /**
      *    creates an instance of my student card to display in the fxml
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Student testing = new Student("cameron", "Thompson", 200425992);
-        firstNameLabel.setText(String.valueOf(testing.getFirstName()));
-        lastNameLabel.setText(String.valueOf(testing.getLastName()));
-        studentNumberLabel.setText(String.valueOf(testing.getStudentNumber()));
-        image.setImage(testing.getImage());
+        //Student testing = new Student("cameron", "Thompson", 200425992, "");
+        //firstNameLabel.setText(String.valueOf(testing.getFirstName()));
+        //lastNameLabel.setText(String.valueOf(testing.getLastName()));
+        //studentNumberLabel.setText(String.valueOf(testing.getStudentNumber()));
+        //image.setImage(testing.getImage());
         favouriteActivities();
     }
 

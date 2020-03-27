@@ -13,19 +13,29 @@ public class Student {
      *    creates all needed variables
      */
     private int studentNumber;
-    private String firstName, lastName;
+    private String firstName;
+    private String lastName;
+    private ArrayList<String> interests;
     private Image image;
     private ArrayList<String> activities;
-
     /**
      *    passes the variables through their validators,
      *    gets the image file
      */
-    Student(String firstName, String lastName, int studentNumber) {
+    Student(String firstName, String lastName, int studentNumber, ArrayList<String> interests) {
         setFirstName(firstName);
         setLastName(lastName);
         setStudentNumber(studentNumber);
+        setInterests(interests);
         image = new Image("./img/cameron.jpg");
+    }
+
+    public ArrayList<String> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(ArrayList<String> interests) {
+        this.interests = interests;
     }
 
     /**
@@ -42,11 +52,15 @@ public class Student {
      *    if the first name is 1 character or empty then the application with throw an error message
      */
     private void setFirstName(String firstName) {
-        if (!firstName.isEmpty() && firstName.length() > 1) {
-            this.firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1);
+        if(firstName.length() > 1) {
+            if (!firstName.isEmpty()) {
+                this.firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
+            } else
+                throw new IllegalArgumentException("You cannot leave your first name empty!");
         }
-        else
-            throw new IllegalArgumentException("You cannot leave your first name empty!");
+        else{
+            throw new IllegalArgumentException("Your first name must be longer than 1 letter!");
+        }
     }
 
     /**
@@ -63,11 +77,15 @@ public class Student {
      *    if the last name is 1 character or empty then the application will throw an error message
      */
     private void setLastName(String lastName) {
-        if (!lastName.isEmpty() && lastName.length() > 1) {
-            this.lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1);
+        if (lastName.length() > 1) {
+            if (!lastName.isEmpty()) {
+                this.lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
+            } else
+                throw new IllegalArgumentException("You cannot leave your last name blank!");
         }
-        else
-            throw new IllegalArgumentException("You cannot leave your last name blank!");
+        else {
+            throw new IllegalArgumentException("Your last name must be longer than 1 letter!");
+        }
     }
 
     /**
@@ -106,6 +124,6 @@ public class Student {
      */
     @Override
     public String toString() {
-        return String.format("%s %s student #: %d", firstName, lastName, studentNumber);
+        return String.format("%s %s student #: %d \nInterests: %s", firstName, lastName, studentNumber, interests);
     }
 }
