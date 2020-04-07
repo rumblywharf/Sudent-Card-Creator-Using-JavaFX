@@ -1,9 +1,16 @@
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -14,6 +21,7 @@ public class CreateStudentController implements Initializable {
     public TextField lastNameTextfield;
     public TextField studentNumberTextfield;
     public Button submitButton;
+    public Button changeImageButton;
     public CheckBox codingCheckbox;
     public CheckBox gamingCheckbox;
     public CheckBox watchingMoviesCheckbox;
@@ -22,6 +30,7 @@ public class CreateStudentController implements Initializable {
     public CheckBox sleepingCheckbox;
     public CheckBox readingCheckbox;
     public CheckBox drawingCheckbox;
+    public ImageView studentImage;
     private ArrayList<String> favouriteActivities = new ArrayList<String>();
 
     @Override
@@ -84,4 +93,22 @@ public class CreateStudentController implements Initializable {
         if(drawingCheckbox.isSelected())
             favouriteActivities.add("Drawing");
     }
+
+    public void chooseFile(ActionEvent event){
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        FileChooser filechooser = new FileChooser();
+        filechooser.setTitle("Choose an Image");
+        FileChooser.ExtensionFilter photoFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+        filechooser.getExtensionFilters().addAll(photoFilter);
+        String startDirectorString = System.getProperty("user.home") + "\\Recents";
+        File startDirectory = new File(startDirectorString);
+        if(!startDirectory.canRead()) {
+            startDirectory = new File(System.getProperty("user.home"));
+        }
+        filechooser.setInitialDirectory(startDirectory);
+        File photoFile = filechooser.showOpenDialog(stage);
+        if(photoFile != null && photoFile.isFile())
+            studentImage.setImage(new Image(photoFile.toURI().toString()));
+    }
+
 }
