@@ -2,12 +2,14 @@
  *    imports all needed packages
  */
 import javafx.scene.image.Image;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 /**
- *    creates the student class
+ *    creates the student class that extends to the create student controller
  */
-public class Student {
+public class Student extends CreateStudentController {
 
     /**
      *    creates all needed variables
@@ -15,25 +17,35 @@ public class Student {
     private int studentNumber;
     private String firstName;
     private String lastName;
-    private ArrayList<String> interests;
+    private LocalDate birthday;
     private Image image;
-    private ArrayList<String> activities;
+    private ArrayList<String> interests;
+
     /**
-     *    passes the variables through their validators,
-     *    gets the image file
+     *    pulls the birthday and image through a constructor
+     *    passes the variables through their validators
      */
-    Student(String firstName, String lastName, int studentNumber, ArrayList<String> interests) {
+    Student(String firstName, String lastName, int studentNumber, ArrayList<String> interests, LocalDate birthday, Image image) {
+        this.birthday = birthday;
+        this.image = image;
         setFirstName(firstName);
         setLastName(lastName);
         setStudentNumber(studentNumber);
         setInterests(interests);
-        image = new Image("./img/cameron.jpg");
     }
 
+    /**
+     * gets the arraylist of interests
+     * @return
+     */
     public ArrayList<String> getInterests() {
         return interests;
     }
 
+    /**
+     * sets the intrests array list, so if any validation was needed you could include here
+     * @param interests
+     */
     public void setInterests(ArrayList<String> interests) {
         this.interests = interests;
     }
@@ -99,7 +111,6 @@ public class Student {
      *    validates that your student number is not 0,
      *    validates that your student number is between 100000000-999999999
      *    if your student number is 0 or is not between 100000000-999999999 then the application will throw an error message
-     *    THIS APPLICATION USES MY GEORGIAN STUDENT NUMBER, HOWEVER IF I WERE TO USES MY LAKEHEAD STUDENT NUMBER I WOULD ADJUST THE VALIDATING NUMBERS IN MY IF STATEMENT
      */
     private void setStudentNumber(int studentNumber) {
         if (studentNumber != 0) {
@@ -110,6 +121,14 @@ public class Student {
         }
         else
             throw new IllegalArgumentException("You cannot leave your student number empty!");
+    }
+
+    /**
+     * pulls a birthday in years that compares to the current date to read the age of someone
+     * @return
+     */
+    public int getBirthday(){
+        return Period.between(birthday, LocalDate.now()).getYears();
     }
 
     /**
@@ -124,6 +143,6 @@ public class Student {
      */
     @Override
     public String toString() {
-        return String.format("%s %s student #: %d \nInterests: %s", firstName, lastName, studentNumber, interests);
+        return String.format("%s %s Student #: %d \n", firstName, lastName, studentNumber);
     }
 }

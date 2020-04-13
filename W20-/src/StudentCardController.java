@@ -1,10 +1,20 @@
 /**
  *    imports all needed packages
  */
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -17,46 +27,70 @@ public class StudentCardController implements Initializable {
     /**
      *    all variables being used
      */
+    @FXML
     public Label firstNameLabel;
+    @FXML
     public Label lastNameLabel;
+    @FXML
     public Label studentNumberLabel;
+    @FXML
     public TextArea favouriteActivitiesTextArea;
+    @FXML
+    public Label birthdayLabel;
+    @FXML
     public ImageView image;
-    private ArrayList<String> activities = new ArrayList<String>();
+    @FXML
+    public Button createNewStudentButton;
+    @FXML
+    public ListView<Student> studentListView;
+    private Student selectedStudent;
 
     /**
-     *    creates an instance of my student card to display in the fxml
+     *    creates an empty initializable method
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Student testing = new Student("cameron", "Thompson", 200425992, "");
-        //firstNameLabel.setText(String.valueOf(testing.getFirstName()));
-        //lastNameLabel.setText(String.valueOf(testing.getLastName()));
-        //studentNumberLabel.setText(String.valueOf(testing.getStudentNumber()));
-        //image.setImage(testing.getImage());
-        favouriteActivities();
     }
 
     /**
-     *    Creates an array list for your favourite activities and throws it into the text area
+     * Fills the labels, images and textareas with the selected students information that was just created
+     * @param student
      */
-    private void favouriteActivities(){
-        activities.add("Coding");
-        activities.add("Video Games");
-        activities.add("Skiing");
-        activities.add("Reading Comic Books");
-        activities.add("Rubix Cube Solving");
-        activities.add("Driving");
-        activities.add("Listening to Music ");
-
-        /**
-         *         found these next two lines of code on stack overflow
-         *         the code takes the arraylist and displays it vertically
-         *         without the square brakes and commas.
-         *         URL: https://stackoverflow.com/questions/30222157/displaying-arrayliststring-in-jtextarea/30222259
-         */
-        for(String a: activities)
-            favouriteActivitiesTextArea.appendText(a + "\n");
+    public void selectedStudent(Student student){
+        selectedStudent = student;
+        studentListView.getItems().addAll(Main.getStudents());
+        firstNameLabel.setText(selectedStudent.getFirstName());
+        lastNameLabel.setText(selectedStudent.getLastName());
+        studentNumberLabel.setText(Integer.toString(selectedStudent.getStudentNumber()));
+        favouriteActivitiesTextArea.setText(String.valueOf(selectedStudent.getInterests()));
+        birthdayLabel.setText(Integer.toString(selectedStudent.getBirthday()));
+        image.setImage(selectedStudent.getImage());
     }
 
+    /**
+     * when the create a new student button is clicked go back to the create student fxml file
+     * @param event
+     * @throws IOException
+     */
+    public void goBackCreateStudent(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("CreateStudent.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setTitle("Create a New Student Card");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * depending on which student is selected in the list, it shows the current students information that is selected
+     */
+    public void selectListView() {
+        selectedStudent = studentListView.getSelectionModel().getSelectedItem();
+        firstNameLabel.setText(selectedStudent.getFirstName());
+        lastNameLabel.setText(selectedStudent.getLastName());
+        studentNumberLabel.setText(Integer.toString(selectedStudent.getStudentNumber()));
+        favouriteActivitiesTextArea.setText(String.valueOf(selectedStudent.getInterests()).substring(1, String.valueOf(selectedStudent.getInterests()).length() - 1));
+        birthdayLabel.setText(Integer.toString(selectedStudent.getBirthday()));
+        image.setImage(selectedStudent.getImage());
+    }
 }
